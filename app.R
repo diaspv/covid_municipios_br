@@ -1,4 +1,4 @@
-# Script para a elaboração dos mapas de COVID19 por municípios
+# Script para a elaboração do mapa de COVID19 por municípios
 #      Elaborado por Patrick Dias <github.com/diaspv/>
 #              Fonte dos dados brasil.IO
 
