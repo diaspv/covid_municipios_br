@@ -59,7 +59,7 @@ ui <- fluidPage(
                              ">",
                              tags$br(),
                              "Mapa elaborado por ",
-                             tags$a(href="mailto:dias.patrickv@gmail.com", 
+                             tags$a(href="https://github.com/diaspv/covid_municipios_br/blob/master/app.R", 
                                     "Patrick Dias"))
                  )
         )
@@ -82,7 +82,7 @@ server <- function(input, output) {
     # Renderizar o mapa 
     output$mapa <- renderLeaflet({
         leaflet(dados) %>% 
-            addTiles(attribution = "Patrick V. Dias") %>%
+            addTiles(attribution = "Brasil.io") %>%
             addProviderTiles(providers$CartoDB.Positron) %>%
             addCircles(lng = ~long, 
                        lat = ~lat, 
