@@ -17,12 +17,12 @@ for(i in pcts){
 coordenadas <- read.csv("./DADOS/Municipios_Lat-Long.csv")  
 coordenadas[1] <- NULL
 # Dados do COVID19 no Brasil. Fonte: brasil.io
-dados <- read.csv("https://brasil.io/dataset/covid19/caso?format=csv", stringsAsFactors = FALSE, encoding = "UTF-8") 
+dados <- read.csv("https://brasil.io/dataset/covid19/caso_full/?is_last=True&format=csv", stringsAsFactors = FALSE, encoding = "UTF-8") 
 atualizado <- as.character(format(max(as.Date(dados$date)), "%d/%m/%Y"))
 dados <- dados %>% 
     filter(is_last == "True") %>% 
     filter(place_type == "city") %>%
-    select(city, absolutos = confirmed, relativos = confirmed_per_100k_inhabitants, obitos = deaths, letalidade = death_rate, city_ibge_code) %>% 
+    select(city, absolutos = last_available_confirmed, relativos = last_available_confirmed_per_100k_inhabitants, obitos = last_available_deaths, letalidade = last_available_death_rate, city_ibge_code) %>% 
     merge(coordenadas, by = "city_ibge_code", all.x = T) %>% 
     mutate(relativos = replace_na(relativos, 0)) %>% 
     arrange(desc(absolutos))
@@ -87,7 +87,7 @@ server <- function(input, output) {
             addCircles(lng = ~long, 
                        lat = ~lat, 
                        weight = 1,
-                       radius = ~relativos*50, 
+                       radius = ~relativos*20, 
                        label = ~city,
                        popup = ~popup,
                        color = "black",
@@ -97,7 +97,7 @@ server <- function(input, output) {
             addCircles(lng = ~long, 
                        lat = ~lat, 
                        weight = 1,
-                       radius = ~absolutos*5, 
+                       radius = ~absolutos*2, 
                        label = ~city,
                        popup = ~popup,
                        color = "black",
